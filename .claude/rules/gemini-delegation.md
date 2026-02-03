@@ -1,6 +1,6 @@
 # Gemini Delegation Rule
 
-**Gemini CLI is your research specialist with massive context and multimodal capabilities.**
+**Gemini CLI is your highly capable specialist with deep reasoning, massive context, and multimodal capabilities.**
 
 ## Context Management (CRITICAL)
 
@@ -9,6 +9,8 @@
 | 状況 | 推奨方法 |
 |------|----------|
 | 短い質問・短い回答 | 直接呼び出しOK |
+| 設計相談 | サブエージェント経由（出力大） |
+| デバッグ分析 | サブエージェント経由（出力大） |
 | コードベース分析 | サブエージェント経由（出力大） |
 | ライブラリ調査 | サブエージェント経由（出力大） |
 | マルチモーダル処理 | サブエージェント経由 |
@@ -31,22 +33,27 @@
 ## About Gemini
 
 Gemini CLI excels at:
+- **Deep reasoning** — Design decisions, debugging, trade-off analysis
 - **1M token context window** — Analyze entire codebases at once
 - **Google Search grounding** — Access latest information
 - **Multimodal processing** — Video, audio, PDF analysis
 
-Think of Gemini as your research assistant who can quickly gather and synthesize information.
+Think of Gemini as your trusted expert who can handle complex reasoning, research, and analysis.
 
-**When you need research → Delegate to subagent → Subagent consults Gemini.**
+**When you need deep thinking or research → Delegate to subagent → Subagent consults Gemini.**
 
 ## When to Consult Gemini
 
 ALWAYS consult Gemini BEFORE:
 
-1. **Pre-implementation research** - Best practices, library comparison
-2. **Large codebase analysis** - Repository-wide understanding
-3. **Documentation search** - Latest official docs, breaking changes
-4. **Multimodal tasks** - Video, audio, PDF content extraction
+1. **Design decisions** - How to structure code, which pattern to use
+2. **Debugging** - If cause isn't obvious or first fix failed
+3. **Implementation planning** - Multi-step tasks, multiple approaches
+4. **Trade-off evaluation** - Choosing between options
+5. **Pre-implementation research** - Best practices, library comparison
+6. **Large codebase analysis** - Repository-wide understanding
+7. **Documentation search** - Latest official docs, breaking changes
+8. **Multimodal tasks** - Video, audio, PDF content extraction
 
 ### Trigger Phrases (User Input)
 
@@ -54,6 +61,11 @@ Consult Gemini when user says:
 
 | Japanese | English |
 |----------|---------|
+| 「どう設計すべき？」「どう実装する？」 | "How should I design/implement?" |
+| 「なぜ動かない？」「原因は？」「エラーが出る」 | "Why doesn't this work?" "Error" |
+| 「どちらがいい？」「比較して」「トレードオフは？」 | "Which is better?" "Compare" |
+| 「〜を作りたい」「〜を実装して」 | "Build X" "Implement X" |
+| 「考えて」「分析して」「深く考えて」 | "Think" "Analyze" "Think deeper" |
 | 「調べて」「リサーチして」「調査して」 | "Research" "Investigate" "Look up" |
 | 「このPDF/動画/音声を見て」 | "Analyze this PDF/video/audio" |
 | 「コードベース全体を理解して」 | "Understand the entire codebase" |
@@ -64,11 +76,11 @@ Consult Gemini when user says:
 
 Skip Gemini for:
 
-- Design decisions (Claude handles these)
-- Code implementation (Claude handles these)
-- Debugging (Claude handles these)
+- Simple, straightforward tasks
 - Simple file operations (do directly)
 - Running tests/linting (do directly)
+- Standard operations (git commit, running tests)
+- Tasks with clear, single solutions
 
 ## How to Consult (via Subagent)
 
@@ -97,6 +109,37 @@ Task tool parameters:
 ```
 
 ### Subagent Patterns by Task Type
+
+**Design Decision Pattern:**
+```
+prompt: |
+  Design decision: {topic}
+
+  gemini -p "Design: {topic}. Analyze trade-offs, recommend
+  approach, identify risks." 2>/dev/null
+
+  Return CONCISE summary:
+  - Recommended approach
+  - Key rationale (2-3 points)
+  - Important risks/concerns
+```
+
+**Debugging Pattern:**
+```
+prompt: |
+  Debug: {issue}
+
+  Context:
+  {error logs, code snippet, reproduction steps}
+
+  gemini -p "Debug: Why is this happening? Root cause analysis
+  and solution." 2>/dev/null
+
+  Return:
+  - Root cause
+  - Recommended fix
+  - Prevention strategy
+```
 
 **Research Pattern:**
 ```
@@ -138,7 +181,7 @@ prompt: |
 While subagent is processing, you can:
 - Work on other files
 - Run tests
-- Spawn another subagent for Codex consultation
+- Spawn another subagent for parallel work
 
 ### Step 3: Receive Summary
 
@@ -175,4 +218,4 @@ gemini -p "{question}" --output-format json 2>/dev/null
 - **Concise handoff**: Main only receives key findings
 - **Parallel work**: Background subagents enable concurrent research
 
-**Use Gemini (via subagent) for research, Codex (via subagent) for reasoning, Claude for orchestration.**
+**Use Gemini (via subagent) for deep reasoning and research, Claude for orchestration and implementation.**

@@ -11,10 +11,29 @@ Claude Code (Orchestrator) ─┬─ Gemini CLI (Research)
 
 ## Quick Start
 
-既存プロジェクトのルートで実行:
+### 新規プロジェクトとして使う
+
+GitHubで「Use this template」ボタンをクリックして新しいリポジトリを作成:
 
 ```bash
-git clone --depth 1 https://github.com/DeL-TaiseiOzaki/claude-code-orchestra.git .starter && cp -r .starter/.claude .starter/.gemini .starter/CLAUDE.md . && rm -rf .starter && claude
+# 作成したリポジトリをクローン
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
+
+# Claude Codeを起動
+claude
+```
+
+### 既存プロジェクトに追加する
+
+```bash
+# 既存プロジェクトのルートで実行
+git clone --depth 1 https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git .starter
+cp -r .starter/.claude .starter/.gemini .starter/CLAUDE.md .
+rm -rf .starter
+
+# Claude Codeを起動
+claude
 ```
 
 ## Prerequisites
@@ -124,7 +143,8 @@ gemini login
 **ワークフロー:**
 1. **Gemini** → リポジトリ分析・事前調査
 2. **Claude** → 要件ヒアリング・計画作成
-3. **Claude** → タスクリスト作成
+3. **Gemini** → 計画レビュー・リスク分析
+4. **Claude** → タスクリスト作成
 
 ### `/plan` — 実装計画
 
@@ -165,9 +185,12 @@ Red-Green-Refactorサイクルで実装します。
 
 ### `/gemini-system` — Gemini CLI連携
 
-リサーチ・大規模分析・マルチモーダル処理に使用します。
+設計判断・デバッグ・リサーチ・大規模分析・マルチモーダル処理に使用します。
 
 **トリガー例:**
+- 「どう設計すべき？」「どう実装する？」
+- 「なぜ動かない？」「エラーが出る」
+- 「どちらがいい？」「比較して」
 - 「調べて」「リサーチして」
 - 「このPDF/動画を見て」
 - 「コードベース全体を理解して」
@@ -227,3 +250,30 @@ uv run ruff check .
 - **ユーザーへの応答**: 日本語
 - **技術ドキュメント**: 英語
 - **README等**: 日本語可
+
+---
+
+## このテンプレートを使う
+
+### テンプレートリポジトリとして使用
+
+1. GitHubで「Use this template」ボタンをクリック
+2. 新しいリポジトリ名を入力して作成
+3. クローンして開発を開始
+
+詳細なセットアップガイド: [.github/SETUP.md](.github/SETUP.md)
+
+### カスタマイズ
+
+- **CLAUDE.md**: プロジェクト固有の情報を追加
+- **pyproject.toml**: プロジェクト名と依存関係を更新
+- **.claude/skills/**: カスタムスキルを追加
+- **.claude/rules/**: ルールをカスタマイズ
+
+### コントリビューション
+
+バグ報告や機能提案は Issues へお願いします。
+
+## ライセンス
+
+MIT License - 詳細は [LICENSE](LICENSE) を参照

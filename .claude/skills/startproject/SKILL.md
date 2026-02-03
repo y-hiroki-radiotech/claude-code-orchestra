@@ -22,9 +22,11 @@ Phase 1: Research (Gemini via Subagent)
     ↓
 Phase 2: Requirements & Planning (Claude)
     ↓
-Phase 3: Task Creation (Claude)
+Phase 3: Design Review (Gemini via Subagent)
     ↓
-Phase 4: CLAUDE.md Update (Claude)
+Phase 4: Task Creation (Claude)
+    ↓
+Phase 5: CLAUDE.md Update (Claude)
     ↓
 [Implementation...]
 ```
@@ -74,7 +76,39 @@ Ask in Japanese:
 
 ---
 
-## Phase 3: Task Creation (Claude)
+## Phase 3: Gemini Design Review (Background)
+
+**Task tool でサブエージェントを起動し、Gemini で計画レビュー。**
+
+```
+Task tool parameters:
+- subagent_type: "general-purpose"
+- run_in_background: true
+- prompt: |
+    Review plan for: {feature}
+
+    Draft plan: {plan from Phase 2}
+
+    1. Call Gemini CLI:
+       gemini -p "Review this implementation plan:
+       {plan}
+
+       Analyze:
+       1. Approach assessment
+       2. Risk analysis
+       3. Implementation order
+       4. Improvements
+       " 2>/dev/null
+
+    2. Return CONCISE summary:
+       - Top 3-5 recommendations
+       - Key risks
+       - Suggested order
+```
+
+---
+
+## Phase 4: Task Creation (Claude)
 
 **サブエージェントの要約を統合し、タスクリストを作成。**
 
@@ -90,7 +124,7 @@ Use TodoWrite to create tasks:
 
 ---
 
-## Phase 4: CLAUDE.md Update (IMPORTANT)
+## Phase 5: CLAUDE.md Update (IMPORTANT)
 
 **プロジェクト固有の情報を CLAUDE.md に追記する。**
 
@@ -128,11 +162,14 @@ Present final plan to user (in Japanese):
 ### 調査結果 (Gemini)
 {Key findings - 3-5 bullet points}
 
-### 設計方針
-{Approach}
+### 設計方針 (Gemini レビュー済み)
+{Approach with refinements}
 
 ### タスクリスト ({N}個)
 {Task list}
+
+### リスクと注意点
+{From Gemini analysis}
 
 ### 次のステップ
 この計画で進めてよろしいですか？

@@ -2,15 +2,24 @@
 """
 UserPromptSubmit hook: Route to appropriate agent based on user intent.
 
-Analyzes user prompts and suggests Gemini for research/multimodal tasks.
+Analyzes user prompts and suggests Gemini for design/debug/research/multimodal tasks.
 """
 
 import json
 import sys
 
-# Triggers for Gemini (research, multimodal, large context)
+# Triggers for Gemini (design, debugging, research, multimodal, large context)
 GEMINI_TRIGGERS = {
     "ja": [
+        # Design & Debug
+        "設計", "どう設計", "アーキテクチャ",
+        "なぜ動かない", "エラー", "バグ", "デバッグ",
+        "どちらがいい", "比較して", "トレードオフ",
+        "実装方法", "どう実装",
+        "リファクタリング", "リファクタ",
+        "レビュー", "見て",
+        "考えて", "分析して", "深く",
+        # Research & Multimodal
         "調べて", "リサーチ", "調査",
         "PDF", "動画", "音声", "画像",
         "コードベース全体", "リポジトリ全体",
@@ -18,6 +27,15 @@ GEMINI_TRIGGERS = {
         "ライブラリ", "パッケージ",
     ],
     "en": [
+        # Design & Debug
+        "design", "architecture", "architect",
+        "debug", "error", "bug", "not working", "fails",
+        "compare", "trade-off", "tradeoff", "which is better",
+        "how to implement", "implementation",
+        "refactor", "simplify",
+        "review", "check this",
+        "think", "analyze", "deeply",
+        # Research & Multimodal
         "research", "investigate", "look up", "find out",
         "pdf", "video", "audio", "image",
         "entire codebase", "whole repository",
@@ -57,9 +75,9 @@ def main():
                     "hookEventName": "UserPromptSubmit",
                     "additionalContext": (
                         f"[Agent Routing] Detected '{trigger}' - this task may benefit from "
-                        "Gemini CLI's research capabilities. Consider: "
-                        '`gemini -p "Research: {topic}" 2>/dev/null` '
-                        "for documentation, library research, or multimodal content."
+                        "Gemini CLI's deep reasoning and research capabilities. Consider: "
+                        '`gemini -p "{question}" 2>/dev/null` '
+                        "for design decisions, debugging, research, or multimodal analysis."
                     )
                 }
             }

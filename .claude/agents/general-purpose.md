@@ -44,15 +44,18 @@ You handle tasks that preserve the main orchestrator's context:
 - Git operations
 
 ### Delegated Agent Work (Context-Heavy)
-- **Gemini research**: Library investigation, codebase analysis, multimodal
+- **Gemini consultation**: Design decisions, debugging, library investigation, codebase analysis, multimodal
 
 **You can and should call Gemini directly within this subagent.**
 
 ## Calling Gemini CLI
 
-When research or large-scale analysis is needed:
+When design decisions, debugging, research, or large-scale analysis is needed:
 
 ```bash
+# Design & Debugging
+gemini -p "{design/debug question}" 2>/dev/null
+
 # Research
 gemini -p "{research question}" 2>/dev/null
 
@@ -64,7 +67,10 @@ gemini -p "{extraction prompt}" < /path/to/file 2>/dev/null
 ```
 
 **When to call Gemini:**
-- Library research: "Best practices for X in 2025"
+- Design decisions: "How should I structure this?"
+- Debugging: "Why isn't this working?"
+- Trade-offs: "Which approach is better?"
+- Library research: "Best practices for X in 2026"
 - Codebase understanding: "Analyze architecture"
 - Multimodal: "Extract info from this PDF"
 
@@ -114,7 +120,25 @@ gemini -p "{extraction prompt}" < /path/to/file 2>/dev/null
 
 ## Common Task Patterns
 
-### Pattern 1: Research with Gemini
+### Pattern 1: Design Decision with Gemini
+```
+Task: "Decide between approach A vs B for feature X"
+
+1. Call Gemini CLI with context
+2. Extract recommendation and rationale
+3. Return decision + key reasons (concise)
+```
+
+### Pattern 2: Debugging with Gemini
+```
+Task: "Debug: Why is X not working?"
+
+1. Gather error context (logs, code)
+2. Call Gemini CLI for root cause analysis
+3. Return cause + recommended fix
+```
+
+### Pattern 3: Research with Gemini
 ```
 Task: "Research best practices for implementing auth"
 
@@ -124,7 +148,7 @@ Task: "Research best practices for implementing auth"
 4. Return summary to main orchestrator
 ```
 
-### Pattern 2: Exploration
+### Pattern 4: Exploration
 ```
 Task: "Find all files related to {topic}"
 

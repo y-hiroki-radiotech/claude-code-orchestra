@@ -1,18 +1,18 @@
 ---
 name: gemini-system
 description: |
-  PROACTIVELY consult Gemini CLI for research, large codebase comprehension,
-  and multimodal data processing. Gemini excels at: massive context windows (1M tokens),
-  Google Search grounding, video/audio/PDF analysis, and repository-wide understanding.
-  Use for pre-implementation research, documentation analysis, and multimodal tasks.
-  Explicit triggers: "research", "investigate", "analyze video/audio/PDF", "understand codebase".
+  PROACTIVELY consult Gemini CLI for design decisions, debugging, research, large codebase
+  comprehension, and multimodal data processing. Gemini excels at: deep reasoning, massive
+  context windows (1M tokens), Google Search grounding, video/audio/PDF analysis.
+  Use for design decisions, debugging, pre-implementation research, and multimodal tasks.
+  Explicit triggers: "design", "debug", "research", "investigate", "analyze", "understand codebase".
 metadata:
-  short-description: Claude Code ↔ Gemini CLI collaboration (research & multimodal)
+  short-description: Claude Code ↔ Gemini CLI collaboration (design, debug, research & multimodal)
 ---
 
-# Gemini System — Research & Multimodal Specialist
+# Gemini System — Deep Reasoning, Research & Multimodal Specialist
 
-**Gemini CLI (gemini-3-pro-preview) is your research specialist with 1M token context.**
+**Gemini CLI (gemini-3-pro-preview) is your deep reasoning and research specialist with 1M token context.**
 
 > **詳細ルール**: `.claude/rules/gemini-delegation.md`
 
@@ -22,27 +22,32 @@ metadata:
 
 | 状況 | 方法 |
 |------|------|
+| 設計相談 | サブエージェント経由（推奨） |
+| デバッグ分析 | サブエージェント経由（推奨） |
 | コードベース分析 | サブエージェント経由（推奨） |
 | ライブラリ調査 | サブエージェント経由（推奨） |
 | マルチモーダル | サブエージェント経由（推奨） |
 | 短い質問 (1-2文回答) | 直接呼び出しOK |
 
-## Gemini vs Codex
+## Gemini's Strengths
 
-| Task | Gemini | Codex |
-|------|--------|-------|
-| **リポジトリ全体理解** | ✓ | |
-| **ライブラリ調査** | ✓ | |
-| **マルチモーダル (PDF/動画/音声)** | ✓ | |
-| **最新ドキュメント検索** | ✓ | |
-| **設計判断** | | ✓ |
-| **デバッグ** | | ✓ |
-| **コード実装** | | ✓ |
+| Task | Gemini |
+|------|--------|
+| **設計判断** | ✓ |
+| **デバッグ** | ✓ |
+| **深い推論** | ✓ |
+| **リポジトリ全体理解** | ✓ |
+| **ライブラリ調査** | ✓ |
+| **マルチモーダル (PDF/動画/音声)** | ✓ |
+| **最新ドキュメント検索** | ✓ |
 
 ## When to Consult (MUST)
 
 | Situation | Trigger Examples |
 |-----------|------------------|
+| **Design decisions** | 「どう設計？」「アーキテクチャ」 / "How to design" "Architecture" |
+| **Debugging** | 「なぜ動かない？」「エラー」 / "Why not working" "Error" |
+| **Trade-offs** | 「どちらがいい？」「比較」 / "Which is better" "Compare" |
 | **Research** | 「調べて」「リサーチ」 / "Research" "Investigate" |
 | **Library docs** | 「ライブラリ」「ドキュメント」 / "Library" "Docs" |
 | **Codebase analysis** | 「コードベース全体」 / "Entire codebase" |
@@ -50,10 +55,9 @@ metadata:
 
 ## When NOT to Consult
 
-- Design decisions (use Codex)
-- Debugging (use Codex)
-- Code implementation (use Codex)
+- Simple, straightforward tasks
 - Simple file operations (do directly)
+- Standard operations (git commit, running tests)
 
 ## How to Consult
 

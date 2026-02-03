@@ -62,7 +62,8 @@ Bash("gemini -p ... '1文で答えて'")
 
 1. Gemini がリポジトリ分析（サブエージェント経由）
 2. Claude が要件ヒアリング・計画作成
-3. Claude がタスクリスト作成
+3. Gemini が計画レビュー・リスク分析（サブエージェント経由）
+4. Claude がタスクリスト作成
 
 → 詳細: `/startproject`, `/plan`, `/tdd` skills
 
