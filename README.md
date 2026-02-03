@@ -1,6 +1,6 @@
 # claude-code-orchestra
 
-![Claude Code Orchestra](https://storage.googleapis.com/zenn-user-upload/06a304a8fe66-20260204.png)
+![Claude Code Orchestra](https://storage.googleapis.com/zenn-user-upload/336c16e9f081-20260204.png)
 
 Multi-Agent AI Development Environment
 
